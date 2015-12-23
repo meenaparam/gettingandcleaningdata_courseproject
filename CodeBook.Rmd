@@ -4,7 +4,7 @@ author: "Meenakshi Parameshwaran"
 date: "23 December 2015"
 output: html_document
 ---
-
+### Introduction
 This document is the codebook for my analysis of the Samsung Accelerometer data. It describes the raw data I use, the variables I focused on, and the processes I carried out to transform the raw data into the tidy dataset that is the main output of this project.
 
 ### Study Design
