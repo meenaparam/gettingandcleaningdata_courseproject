@@ -150,7 +150,7 @@ tidy <- ttnew %>% group_by(subject, activity) %>% summarise_each(funs(mean(., na
 write.table(x = tidy, file = "tidy_uci_har.txt", sep="\t", row.names = F) 
 
 # test it works by reading the data back in
-mydata <- read.table(file = "tidy_uci_har.txt", header = T)
+tidydata <- read.table(file = "tidy_uci_har.txt", header = T)
 # yep, the tidy dataset is reading in ok
 
 # END #
