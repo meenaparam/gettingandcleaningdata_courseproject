@@ -10,7 +10,7 @@ http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartpho
 
 This repository contains three files (in addition to this README):
 
-### 1. run_analysis.R
+### 1. [run_analysis.R] (gettingandcleaningdata_courseproject/run_analysis.R)
 This is the main R script for this project. When run, it transforms the source data into a tidy data set containing the average he average of each mean and standard deviation variable in the source data for each physical activity and each subject.
 
 More specifically, run_analysis.R does the following:
@@ -21,7 +21,7 @@ More specifically, run_analysis.R does the following:
 4. Appropriately labels the data set with descriptive variable names. 
 5. Creates a second, independent tidy data set with the average of each variable for each physical activity and each subject (person in the dataset.
 
-### 2. tidy_uci_hcr.txt
+### 2. [tidy_uci_hcr.txt] (gettingandcleaningdata_courseproject/tidy_uci_har.txt)
 This is the tidy dataset that results from the analysis performed in this project.
 It can easily be read back into R using the following code:
 
@@ -29,6 +29,6 @@ It can easily be read back into R using the following code:
 tidydata <- read.table(file = "tidy_uci_har.txt", header = T)
 ```
 ### 3. CodeBook.md
-This is the Codebook for this project. The Codebook describes the data used in the project, the relevant variables, and the processess I carried out to transform the data from its raw form into the final tidy dataset included in this repo.
+This is the Codebook for this project. The Codebook describes the data used in the project, the relevant variables, and the processess I carried out to transform the data from its raw form into the [final tidy dataset] (gettingandcleaningdata_courseproject/tidy_uci_har.txt) included in this repo.
 
 
