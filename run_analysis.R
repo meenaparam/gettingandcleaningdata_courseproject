@@ -36,7 +36,10 @@ y_train <- read.table("./UCI HAR Dataset/train/y_train.txt")
 
 # Step 3 - combine the datasets all together
 
-# I can see the dimensions oand it looks like the x_ dfs have the most variables - the subject_ and y_ dfs only have 1 variable each. The test dfs all have the same number of obs - 2947. Likewise, the train dfs all have the same number of obs - 7352. This means I probably just need to cbind the extra columns on.
+# I can see the dimensions and it looks like the x_ dfs have the most variables - the subject_ and y_ dfs only have 1 variable each. 
+# The test dfs all have the same number of obs - 2947. 
+# Likewise, the train dfs all have the same number of obs - 7352. 
+# This means I probably just need to cbind the extra columns on.
 
 test <- cbind(x_test, y_test, subject_test)
 train <- cbind(x_train, y_train, subject_train)
@@ -104,7 +107,10 @@ table(ttnew$activity)
 
 ## Part 4 - Appropriately labels the data set with descriptive variable names. 
 
-# the variable names are already pretty descriptive as I have used the names that come from the features.txt file. I just need to do a few tweaks to make it clearer. I need to be explicit about what the abbreviations means. I should keep the variable names lowercase, without hyphens, and make them descriptive.
+# the variable names are already pretty descriptive as I have used the names that come from the features.txt file. 
+# I just need to do a few tweaks to make it clearer.
+# I need to be explicit about what the abbreviations means. 
+# I should keep the variable names lowercase, without hyphens, and make them descriptive.
 
 # reminder of the current names
 names(ttnew)
@@ -142,7 +148,7 @@ names(ttnew) <- sub("bodybody", "body", names(ttnew))
 # final check - looks ok
 names(ttnew)
 
-## Part 5 - From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+## Part 5 - Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 tidy <- ttnew %>% group_by(subject, activity) %>% summarise_each(funs(mean(., na.rm=TRUE)))
 
