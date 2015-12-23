@@ -1,0 +1,181 @@
+---
+title: "Codebook for Samsung Accelerometer Project"
+author: "Meenakshi Parameshwaran"
+date: "23 December 2015"
+output: html_document
+---
+
+This document is the codebook for my analysis of the Samsung Accelerometer data. It describes the raw data I use, the variables I focused on, and the processes I carried out to transform the raw data into the tidy dataset that is the main output of this project.
+
+### Study Design
+The data used here come from the "Human Activity Recognition Using Smartphones Dataset" collected by Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, and Luca Oneto of [Smartlab](http://www.smartlab.ws), Genoa, Italy. The following description of the study design is sourced from the README.txt file provided with the source data.
+
+> The datasets containg information from experimentscarried out with a group of 30 volunteers aged 19-48 years. Each person performed six activities (walking, walking upstairs, walking downstairs, sitting, standing, laying)  wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, the researchers captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+
+> The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. The features are described more extensively in the section below.
+
+More information on the study design is available here:
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+### Raw Data
+The source data for this project is available here:
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
+
+There were 6 raw datasets used in this analysis. They were:
+
+1. 'X_train.txt': Training dataset of 561 sensor measurements (features) measured in Hz. Each row identifies a subject (person), an activity, and 561 measurements taken from or calculated from the accelerometer and gyroscope 3-axial raw signals in their smartphones. More information on the features is provided below.
+2. 'y_train.txt': Training dataset activity labels. Each row identifies the activity to which the measurements refer. Its range is from 1 to 6.
+3. 'X_test.txt': Test dataset of 561 sensor measurements (features) measured in Hz. Each row identifies a subject (person), an activity, and 561 measurements taken from or calculated from the accelerometer and gyroscope 3-axial raw signals in their smartphones. More information on the features is provided below.
+4. 'y_test.txt': Test dataset activity labels labels. Each row identifies the activity to which the measurements refer. Its range is from 1 to 6.
+5. 'subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
+6. 'subject_test.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+
+#### Features
+
+The following details on the features (measurements) captured in the datasets come from the 'features_info.txt' file supplied with the data.
+
+Note that all time domain signal measurements take Hz as their unit of measurement.
+
+> The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+> Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+> Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+> These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+> * tBodyAcc-XYZ
+* tGravityAcc-XYZ
+* tBodyAccJerk-XYZ
+* tBodyGyro-XYZ
+* tBodyGyroJerk-XYZ
+* tBodyAccMag
+* tGravityAccMag
+* tBodyAccJerkMag
+* tBodyGyroMag
+* tBodyGyroJerkMag
+* fBodyAcc-XYZ
+* fBodyAccJerk-XYZ
+* fBodyGyro-XYZ
+* fBodyAccMag
+* fBodyAccJerkMag
+* fBodyGyroMag
+* fBodyGyroJerkMag
+
+> The set of variables that were estimated from these signals are: 
+
+> * mean(): Mean value
+* std(): Standard deviation
+* mad(): Median absolute deviation 
+* max(): Largest value in array
+* min(): Smallest value in array
+* sma(): Signal magnitude area
+* energy(): Energy measure. Sum of the squares divided by the number of values. 
+* iqr(): Interquartile range 
+* entropy(): Signal entropy
+* arCoeff(): Autorregresion coefficients with Burg order equal to 4
+* correlation(): correlation coefficient between two signals
+* maxInds(): index of the frequency component with largest magnitude
+* meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+* skewness(): skewness of the frequency domain signal 
+* kurtosis(): kurtosis of the frequency domain signal 
+* bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+* angle(): Angle between to vectors.
+
+> Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+> * gravityMean
+* tBodyAccMean
+* tBodyAccJerkMean
+* tBodyGyroMean
+* tBodyGyroJerkMean
+
+### Processed Data
+
+In order to transform the raw data into the [tidy output dataset](https://github.com/mparam83/gettingandcleaningdata_courseproject/blob/master/tidy_uci_har.txt) I carried out the following steps.
+
+1. I unzipped and loaded each of the six datasets above into R. 
+2. I used the `str()` and `dim()` functions to understand the structure and dimensions of each dataset. This helped me understand what each dataset contained and how they could be combined.
+3. I used the `cbind()` function to column-bind together the datasets with _train as a suffix. I repeated this action for the datasets with _test as a suffix. This reduced the number of datasets I was working with from 6 to 2.
+4. I used the `rbind()` function to row-bind together the two datasets into 1. I called this single merged dataset `tt`. Combining the 6 datasets resulted into `tt` resulted in a single dataset containing 10299 observations and 563 variables (561 feature variables, one variable containing a subject identifier, and one variable containing an activity identifier).
+5. I labelled the columns in `tt` to help me use them. I labelled them using the `names()` function. In order to label each column, I had to figure out what it was. I used the 'features.txt' file that came with the raw data to label all 561 features columns. I used the same names as in the 'features.txt' file. Then I looked at the distribution of values in columns 562 and 563 and was able to identify them as containing information on the activity identifier and subject identifier respectively.
+6. I reduced the number of columns in the dataset by keeping only those containing data on the mean or standard deviation of a feature. I could identify the relevant columns as the 'features_info.txt' file noted them to be the ones with the terms "mean()" or "std()" in the variable name. Before using the `select()` function from the `dplyr` package to select my target columns, I first had to remove duplicated variable names using the `duplicated()` function. This procedure resulted in two new datasets from `tt` - one containing means and one containg standard deviations.
+7. I created another dataset from `tt` containing the subject and activity variables.
+8. Using `cbind()`, I combined the dataset created in step 7 with the two created in step 6. This result in a new dataset, named `ttnew`, containing 10299 observations of 68 variables.
+9. I added in descriptive activity names to the activity variable by using information contained in the 'activity_labels.txt' file, which helped me convert numeric activity labels into categories.
+10. I appropriately labelled the variables in the dataset so they were as clear and descriptive as possible. I followed coding standards by removing hyphens and making variables lowercase. I used the `gsub()` function to convert less descriptive abbreviations into clearer variable names.
+11. In the final stage of processing, I used the `group_by()` and `summarise_each(funs(mean))` functions from the `dplyr` package to create a second, independent tidy data set with the *mean* of each of my variables for each subject and each activity. This created my final dataset, named `tidy`, with 180 observations of 68 variables (subject, activity, and 66 variables containing the mean of the original variable for each subject and each activity).
+12. I used the `write.table()` function to write out this final tidy dataset into a text file.
+
+The final tidy dataset contains the variables listed below. The x, y and z suffixes refer to the axis along which the measurement was collected.
+
+ 1. subject - a numeric identifier for each subject (person) in the study, ranging from 1 to 30.                        
+ 2. activity - a label for each physical activity (walking, walking\_upstairs, walking\_downstairs, sitting, standing, laying)                                  
+ 3. time-body-accelerometer-mean-x                  
+ 4. time-body-accelerometer-mean-y                  
+ 5. time-body-accelerometer-mean-z                  
+ 6. time-gravity-accelerometer-mean-x               
+ 7. time-gravity-accelerometer-mean-y               
+ 8. time-gravity-accelerometer-mean-z               
+ 9. time-body-accelerometer-jerk-mean-x             
+10. time-body-accelerometer-jerk-mean-y             
+11. time-body-accelerometer-jerk-mean-z             
+12. time-body-gyroscope-mean-x                      
+13. time-body-gyroscope-mean-y                      
+14. time-body-gyroscope-mean-z                      
+15. time-body-gyroscope-jerk-mean-x                 
+16. time-body-gyroscope-jerk-mean-y                 
+17. time-body-gyroscope-jerk-mean-z                 
+18. time-body-accelerometer-magnitude-mean          
+19. time-gravity-accelerometer-magnitude-mean       
+20. time-body-accelerometer-jerk-magnitude-mean     
+21. time-body-gyroscope-magnitude-mean              
+22. time-body-gyroscope-jerk-magnitude-mean         
+23. frequency-body-accelerometer-mean-x             
+24. frequency-body-accelerometer-mean-y             
+25. frequency-body-accelerometer-mean-z             
+26. frequency-body-accelerometer-jerk-mean-x        
+27. frequency-body-accelerometer-jerk-mean-y        
+28. frequency-body-accelerometer-jerk-mean-z        
+29. frequency-body-gyroscope-mean-x                 
+30. frequency-body-gyroscope-mean-y                 
+31. frequency-body-gyroscope-mean-z                 
+32. frequency-body-accelerometer-magnitude-mean     
+33. frequency-body-accelerometer-jerk-magnitude-mean
+34. frequency-body-gyroscope-magnitude-mean         
+35. frequency-body-gyroscope-jerk-magnitude-mean    
+36. time-body-accelerometer-std-x                   
+37. time-body-accelerometer-std-y                   
+38. time-body-accelerometer-std-z                   
+39. time-gravity-accelerometer-std-x                
+40. time-gravity-accelerometer-std-y                
+41. time-gravity-accelerometer-std-z                
+42. time-body-accelerometer-jerk-std-x              
+43. time-body-accelerometer-jerk-std-y              
+44. time-body-accelerometer-jerk-std-z              
+45. time-body-gyroscope-std-x                       
+46. time-body-gyroscope-std-y                       
+47. time-body-gyroscope-std-z                       
+48. time-body-gyroscope-jerk-std-x                  
+49. time-body-gyroscope-jerk-std-y                  
+50. time-body-gyroscope-jerk-std-z                  
+51. time-body-accelerometer-magnitude-std           
+52. time-gravity-accelerometer-magnitude-std        
+53. time-body-accelerometer-jerk-magnitude-std      
+54. time-body-gyroscope-magnitude-std               
+55. time-body-gyroscope-jerk-magnitude-std          
+56. frequency-body-accelerometer-std-x              
+57. frequency-body-accelerometer-std-y              
+58. frequency-body-accelerometer-std-z              
+59. frequency-body-accelerometer-jerk-std-x         
+60. frequency-body-accelerometer-jerk-std-y         
+61. frequency-body-accelerometer-jerk-std-z         
+62. frequency-body-gyroscope-std-x                  
+63. frequency-body-gyroscope-std-y                  
+64. frequency-body-gyroscope-std-z                  
+65. frequency-body-accelerometer-magnitude-std      
+66. frequency-body-accelerometer-jerk-magnitude-std 
+67. frequency-body-gyroscope-magnitude-std          
+68. frequency-body-gyroscope-jerk-magnitude-std    
+
